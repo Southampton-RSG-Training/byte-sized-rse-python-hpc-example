@@ -24,7 +24,7 @@ cd $SLURM_SUBMIT_DIR
 source venv/bin/activate
 
 # run the code
-python python augment_images.py
+python augment_images.py
 
 # Clean-up
 deactivate
