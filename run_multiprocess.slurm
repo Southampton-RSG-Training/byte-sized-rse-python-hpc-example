@@ -23,8 +23,8 @@ cd $SLURM_SUBMIT_DIR
 # activate the Python environment
 source venv/bin/activate
 
-# run the code
-python augment_images.py
+# run the code (disable progress bar when running batch)
+TQDM_DISABLE=1 python augment_images.py
 
 # Clean-up
 deactivate
