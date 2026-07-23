@@ -44,6 +44,7 @@ def augment_image(
     type=click.Path(dir_okay=True, file_okay=False, exists=True),
 )
 def main(input_dir):
+    import datetime
     import os
     from time import perf_counter
 
@@ -54,6 +55,7 @@ def main(input_dir):
     paths = sorted(Path(input_dir).glob("*.jpg"))
 
     with MPICommExecutor() as executor:
+        print(f"Main executor running:", datetime.datetime.now())
         for result in executor.map(augment_image, paths):
             # if the function returns anything we could do something with
             # the result; but augment_image doesn't return anything so we
@@ -64,12 +66,16 @@ def main(input_dir):
 
 
 def worker():
+    import datetime
     from mpi4py import MPI
+
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
-    print(f"Worker rank {rank} ready.")
+    print(f"Worker rank {rank} ready:", datetime.datetime.now())
+
     with MPICommExecutor():
         # wait until done
+        print(f"Worker rank {rank} executor running:", datetime.datetime.now())
         pass
 
 
