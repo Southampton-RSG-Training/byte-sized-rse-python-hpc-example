@@ -24,7 +24,7 @@ cd $SLURM_SUBMIT_DIR
 source venv/bin/activate
 
 # run the code (disable progress bar when running batch)
-TQDM_DISABLE=1 python augment_images.py
+TQDM_DISABLE=1 python augment_images_multiprocessing.py
 
 # Clean-up
 deactivate

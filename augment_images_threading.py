@@ -47,9 +47,11 @@ def augment_image(
 )
 def main(input_dir, n_workers=None):
     from concurrent.futures import ThreadPoolExecutor
+    import os
     from time import perf_counter
     from tqdm import tqdm
 
+    print("Available cores:", os.process_cpu_count())
     t = perf_counter()
     DEFAULT_OUTPUT.mkdir(exist_ok=True)
     paths = sorted(Path(input_dir).glob("*.jpg"))

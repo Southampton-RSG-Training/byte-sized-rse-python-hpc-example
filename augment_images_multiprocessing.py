@@ -47,8 +47,11 @@ def augment_image(
 )
 def main(input_dir, n_workers=None):
     from concurrent.futures import ProcessPoolExecutor
+    import os
     from tqdm import tqdm
     from time import perf_counter
+
+    print("Available cores:", os.process_cpu_count())
 
     t = perf_counter()
     DEFAULT_OUTPUT.mkdir(exist_ok=True)
