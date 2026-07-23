@@ -64,6 +64,10 @@ def main(input_dir):
 
 
 def worker():
+    from mpi4py import MPI
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    print(f"Worker rank {rank} ready.")
     with MPICommExecutor():
         # wait until done
         pass

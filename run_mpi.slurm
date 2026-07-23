@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=python-mpi
 #SBATCH --partition=batch
-#SBATCH --time=00:05:00     # Maximum run time
+#SBATCH --time=00:15:00     # Maximum run time
 #SBATCH --nodes=2           # Run on just 2 node
 #SBATCH --ntasks=64          # Run one instance of the script
 
