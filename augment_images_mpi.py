@@ -13,6 +13,7 @@ import sys
 from pathlib import Path
 
 import click
+from mpi4py.futures import MPICommExecutor
 from PIL import Image
 from torchvision.transforms.v2 import RandAugment
 
@@ -43,7 +44,6 @@ def augment_image(
     type=click.Path(dir_okay=True, file_okay=False, exists=True),
 )
 def main(input_dir):
-    from mpi4py.futures import MPICommExecutor
     import os
     from time import perf_counter
 
@@ -54,16 +54,22 @@ def main(input_dir):
     paths = sorted(Path(input_dir).glob("*.jpg"))
 
     with MPICommExecutor() as executor:
-        # Check if this process is the worker or the main process (rank 0).
-        if executor is not None:
-            for result in executor.map(augment_image, paths):
-                # if the function returns anything we could do something with
-                # the result; but augment_image doesn't return anything so we
-                # do nothing
-                pass
+        for result in executor.map(augment_image, paths):
+            # if the function returns anything we could do something with
+            # the result; but augment_image doesn't return anything so we
+            # do nothing
+            pass
 
         sys.stderr.write(f"Time taken: {perf_counter() - t:.2f}s\n")
 
 
+def worker():
+    with MPICommExecutor():
+        # wait until done
+        pass
+
+
 if __name__ == "__main__":
     main()
+elif __name__ == "__worker__":
+    worker()
