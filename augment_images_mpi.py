@@ -56,10 +56,14 @@ def main(input_dir):
 
     with MPICommExecutor() as executor:
         print(f"Main executor running:", datetime.datetime.now())
+        started = False
         for result in executor.map(augment_image, paths):
             # if the function returns anything we could do something with
             # the result; but augment_image doesn't return anything so we
             # do nothing
+            if not started:
+                print("Jobs dispatched:", datetime.datetime.now())
+                started = True
             pass
 
         sys.stderr.write(f"Time taken: {perf_counter() - t:.2f}s\n")
@@ -67,10 +71,6 @@ def main(input_dir):
 
 def worker():
     import datetime
-    from mpi4py import MPI
-
-    comm = MPI.COMM_WORLD
-    rank = comm.Get_rank()
     print(f"Worker rank {rank} ready:", datetime.datetime.now())
 
     with MPICommExecutor():
@@ -78,8 +78,15 @@ def worker():
         print(f"Worker rank {rank} executor running:", datetime.datetime.now())
         pass
 
+    print(f"Worker rank {rank} executor done:", datetime.datetime.now())
+
 
 if __name__ == "__main__":
     main()
 elif __name__ == "__worker__":
+    from mpi4py import MPI
+
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+
     worker()
