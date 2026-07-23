@@ -8,7 +8,7 @@
 #   "tqdm",
 # ]
 # ///
-
+import datetime
 import sys
 from pathlib import Path
 
@@ -27,6 +27,10 @@ def augment_image(
     n_augments=10,
     augmenter=DEFAULT_AUGMENTER,
 ):
+    global work_started
+    if not work_started:
+        print("Work started {rank}:", datetime.datetime.now())
+        work_started = True
     stem = file_path.stem
     file_dir = output_dir / stem
     file_dir.mkdir(exist_ok=True)
@@ -44,11 +48,10 @@ def augment_image(
     type=click.Path(dir_okay=True, file_okay=False, exists=True),
 )
 def main(input_dir):
-    import datetime
     import os
     from time import perf_counter
 
-    print("Available cores:", os.process_cpu_count())
+    print("Available cores:", os.process_cpu_count(), datetime.datetime.now())
 
     t = perf_counter()
     DEFAULT_OUTPUT.mkdir(exist_ok=True)
@@ -70,7 +73,6 @@ def main(input_dir):
 
 
 def worker():
-    import datetime
     print(f"Worker rank {rank} ready:", datetime.datetime.now())
 
     with MPICommExecutor():
@@ -88,5 +90,6 @@ elif __name__ == "__worker__":
 
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
+    work_started = False
 
     worker()
