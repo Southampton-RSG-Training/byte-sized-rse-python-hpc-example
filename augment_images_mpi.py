@@ -15,13 +15,11 @@ from pathlib import Path
 import click
 from PIL import Image
 from torchvision.transforms.v2 import RandAugment
-from line_profiler import profile
 
 DEFAULT_AUGMENTER = RandAugment()
 DEFAULT_OUTPUT = Path("output")
 
 
-@profile
 def augment_image(
     file_path,
     output_dir=DEFAULT_OUTPUT,
@@ -46,7 +44,10 @@ def augment_image(
 )
 def main(input_dir):
     from mpi4py.futures import MPICommExecutor
+    import os
     from time import perf_counter
+
+    print("Available cores:", os.process_cpu_count())
 
     t = perf_counter()
     DEFAULT_OUTPUT.mkdir(exist_ok=True)
