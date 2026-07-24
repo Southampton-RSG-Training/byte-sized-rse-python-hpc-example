@@ -3,14 +3,14 @@
 #SBATCH --job-name=python-mpi
 #SBATCH --partition=batch
 #SBATCH --time=00:15:00     # Maximum run time
-#SBATCH --nodes=2           # Run on just 2 node
-#SBATCH --ntasks=64          # Run one instance of the script
+#SBATCH --nodes=2           # Run on 2 nodes
+#SBATCH --ntasks=64         # Run 64 total workers
 
 # Optional: print useful job info
 echo "Running on host: $(hostname)"
 echo "Job started at: $(date)"
 echo "SLURM job ID: $SLURM_JOB_ID"
-echo "Number of CPUs: $SLURM_CPUS_PER_TASK"
+echo "Number of CPUs allocated on each node: $SLURM_JOB_CPUS_PER_NODE"
 
 # Load required modules
 module purge
