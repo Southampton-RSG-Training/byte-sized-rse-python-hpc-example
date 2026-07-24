@@ -8,12 +8,12 @@
 #   "tqdm",
 # ]
 # ///
-import datetime
+
 import sys
 from pathlib import Path
 
 import click
-from mpi4py.futures import MPICommExecutor
+from mpi4py.futures import MPIPoolExecutor
 from PIL import Image
 from torchvision.transforms.v2 import RandAugment
 
@@ -27,10 +27,6 @@ def augment_image(
     n_augments=10,
     augmenter=DEFAULT_AUGMENTER,
 ):
-    global work_started
-    if not work_started:
-        print("Work started {rank}:", datetime.datetime.now())
-        work_started = True
     stem = file_path.stem
     file_dir = output_dir / stem
     file_dir.mkdir(exist_ok=True)
@@ -48,48 +44,22 @@ def augment_image(
     type=click.Path(dir_okay=True, file_okay=False, exists=True),
 )
 def main(input_dir):
-    import os
     from time import perf_counter
-
-    print("Available cores:", os.process_cpu_count(), datetime.datetime.now())
 
     t = perf_counter()
     DEFAULT_OUTPUT.mkdir(exist_ok=True)
     paths = sorted(Path(input_dir).glob("*.jpg"))
 
-    with MPICommExecutor() as executor:
-        print(f"Main executor running:", datetime.datetime.now())
-        started = False
+    with MPIPoolExecutor() as executor:
         for result in executor.map(augment_image, paths):
             # if the function returns anything we could do something with
             # the result; but augment_image doesn't return anything so we
             # do nothing
-            if not started:
-                print("Jobs dispatched:", datetime.datetime.now())
-                started = True
             pass
 
         sys.stderr.write(f"Time taken: {perf_counter() - t:.2f}s\n")
 
 
-def worker():
-    print(f"Worker rank {rank} ready:", datetime.datetime.now())
-
-    with MPICommExecutor():
-        # wait until done
-        print(f"Worker rank {rank} executor running:", datetime.datetime.now())
-        pass
-
-    print(f"Worker rank {rank} executor done:", datetime.datetime.now())
-
-
 if __name__ == "__main__":
+    # This only runs on the rank 0 process.
     main()
-elif __name__ == "__worker__":
-    from mpi4py import MPI
-
-    comm = MPI.COMM_WORLD
-    rank = comm.Get_rank()
-    work_started = False
-
-    worker()

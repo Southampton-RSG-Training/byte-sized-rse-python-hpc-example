@@ -24,7 +24,7 @@ cd $SLURM_SUBMIT_DIR
 source venv/bin/activate
 
 # run the code
-mpirun -mca coll_hcoll_enable 0 -np $SLURM_NTASKS python -m mpi4py.futures augment_images_mpi.py
+mpirun -mca coll_hcoll_enable 0 -n $SLURM_NTASKS python -m mpi4py.futures augment_images_mpi.py
 
 # Clean-up
 deactivate
