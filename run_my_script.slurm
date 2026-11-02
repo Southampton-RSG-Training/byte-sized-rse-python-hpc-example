@@ -27,4 +27,4 @@ export PYTHONUNBUFFERED=1
 cd $SLURM_SUBMIT_DIR
 
 # Run the Python script
-python my_script.py
+srun python my_script.py
