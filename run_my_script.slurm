@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=python-example
 #SBATCH --partition=batch
-#SBATCH --time=04:00:00
+#SBATCH --time=00:01:00
 #SBATCH --nodes=2
 #SBATCH --ntasks=4
 #SBATCH --cpus-per-task=1
