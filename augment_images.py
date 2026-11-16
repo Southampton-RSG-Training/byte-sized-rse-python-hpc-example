@@ -38,7 +38,7 @@ def augment_image(
 @click.command()
 @click.argument(
     "input_dir",
-    default=Path("flowers-102/jpg"),
+    default=Path("flowers-102"),
     type=click.Path(dir_okay=True, file_okay=False, exists=True),
 )
 def main(input_dir):
