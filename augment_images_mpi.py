@@ -41,7 +41,7 @@ def augment_image(
 @click.argument(
     "input_dir",
     default=Path("flowers-102"),
-    type=click.Path(dir_okay=True, file_okay=False, exists=True),
+    type=click.Path(dir_okay=True, file_okay=False, exists=True, path_type=Path),
 )
 def main(input_dir):
     from time import perf_counter

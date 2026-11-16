@@ -20,7 +20,7 @@ from tqdm import tqdm
 @click.option(
     "--output",
     default=Path("flowers-102"),
-    type=click.Path(dir_okay=True, file_okay=False),
+    type=click.Path(dir_okay=True, file_okay=False, path_type=Path),
     help="The output directory",
 )
 @click.option(
@@ -39,7 +39,7 @@ def main(output, split):
     """
     output.mkdir(parents=True, exist_ok=True)
     if get_all := (split == "all"):
-        split = 'test'
+        split = "test"
     with TemporaryDirectory() as temp_dir:
         click.echo("Downloading data:")
         dataset = Flowers102(root=temp_dir, split=split, download=True)
