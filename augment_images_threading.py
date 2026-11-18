@@ -43,7 +43,7 @@ def augment_image(
 )
 @click.option(
     "--n-workers",
-    help="The index of the last image to process (-1 for end)",
+    help="The number of workers to use.",
 )
 def main(input_dir, n_workers=None):
     from concurrent.futures import ThreadPoolExecutor
