@@ -2,6 +2,7 @@
 
 #SBATCH --job-name=python-multiprocessing
 #SBATCH --partition=batch
+#SBATCH --reservation=root_1    # Reserved nodes for this class (don't add this normally)
 #SBATCH --time=00:05:00     # Maximum run time
 #SBATCH --nodes=1           # Run on just 1 node
 #SBATCH --ntasks=1          # Run one instance of the script

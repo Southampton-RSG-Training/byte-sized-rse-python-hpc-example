@@ -2,6 +2,7 @@
 
 #SBATCH --job-name=python-example
 #SBATCH --partition=batch
+#SBATCH --reservation=root_1    # Reserved nodes for this class (don't add this normally)
 #SBATCH --time=00:01:00
 #SBATCH --nodes=2
 #SBATCH --ntasks=4
