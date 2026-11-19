@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#SBATCH --job-name=python-example
+#SBATCH --job-name=simple-multinode-example
 #SBATCH --partition=batch
 #SBATCH --reservation=root_1    # Reserved nodes for this class (don't add this normally)
-#SBATCH --time=00:01:00
+#SBATCH --time=00:05:00
 #SBATCH --nodes=2
 #SBATCH --ntasks=2
 #SBATCH --cpus-per-task=32
@@ -19,7 +19,7 @@ module purge
 module load python
 
 # Activate Python virtual environment
-source ~/myenv/bin/activate
+source ~/venv/bin/activate
 
 # Set any environment variables or configuration options
 export PYTHONUNBUFFERED=1
