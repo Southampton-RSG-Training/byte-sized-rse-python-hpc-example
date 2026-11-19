@@ -6,6 +6,7 @@
 #SBATCH --time=00:05:00
 #SBATCH --nodes=2
 #SBATCH --ntasks=64
+#SBATCH --tasks-per-node=32
 #SBATCH --cpus-per-task=1
 
 # Optional: print useful job info

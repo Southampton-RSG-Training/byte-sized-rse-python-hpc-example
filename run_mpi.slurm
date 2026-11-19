@@ -6,6 +6,7 @@
 #SBATCH --time=00:15:00     # Maximum run time
 #SBATCH --nodes=2           # Run on 2 nodes
 #SBATCH --ntasks=64         # Run 64 total workers
+#SBATCH --tasks-per-node=32
 
 # Optional: print useful job info
 echo "Running on host: $(hostname)"
