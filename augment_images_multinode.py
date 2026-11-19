@@ -59,6 +59,8 @@ def main(input_dir, n_workers=None):
 
     paths = all_paths[rank::n_tasks]
 
+    print("Processing", len(paths), "on worker", rank)
+
     with ProcessPoolExecutor(max_workers=n_workers) as executor:
         for result in executor.map(augment_image, paths):
             # if the function returns anything we could do something with the
