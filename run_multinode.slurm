@@ -18,14 +18,14 @@ echo "Number of CPUs: $SLURM_CPUS_PER_TASK"
 module purge
 module load python
 
-# Activate Python virtual environment
-source ~/venv/bin/activate
-
 # Set any environment variables or configuration options
 export PYTHONUNBUFFERED=1
 
 # Move to job directory
 cd $SLURM_SUBMIT_DIR
+
+# Activate Python virtual environment
+source venv/bin/activate
 
 # Run the Python script
 srun python augment_images_multinode.py
