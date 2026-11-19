@@ -9,8 +9,8 @@
 # ]
 # ///
 
-import sys
 from pathlib import Path
+from time import perf_counter
 
 import click
 from mpi4py.futures import MPIPoolExecutor
@@ -44,7 +44,6 @@ def augment_image(
     type=click.Path(dir_okay=True, file_okay=False, exists=True, path_type=Path),
 )
 def main(input_dir):
-    from time import perf_counter
 
     t = perf_counter()
     DEFAULT_OUTPUT.mkdir(exist_ok=True)
@@ -57,7 +56,7 @@ def main(input_dir):
             # do nothing
             pass
 
-        sys.stderr.write(f"Time taken: {perf_counter() - t:.2f}s\n")
+        print(f"Time taken: {perf_counter() - t:.2f}s\n")
 
 
 if __name__ == "__main__":
