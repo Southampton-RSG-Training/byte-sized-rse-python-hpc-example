@@ -18,9 +18,6 @@ echo "Number of CPUs: $SLURM_CPUS_PER_TASK"
 module purge
 module load python
 
-# Activate Python virtual environment
-source ~/myenv/bin/activate
-
 # Set any environment variables or configuration options
 export PYTHONUNBUFFERED=1
 
