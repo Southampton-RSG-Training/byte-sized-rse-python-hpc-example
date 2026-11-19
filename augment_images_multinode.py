@@ -7,7 +7,6 @@
 # ]
 # ///
 
-from concurrent.futures import ProcessPoolExecutor
 import os
 from pathlib import Path
 from time import perf_counter
@@ -61,11 +60,9 @@ def main(input_dir, n_workers=None):
 
     print("Processing", len(paths), "on worker", rank)
 
-    with ProcessPoolExecutor(max_workers=n_workers) as executor:
-        for result in executor.map(augment_image, paths):
-            # if the function returns anything we could do something with the
-            # result; but augment_image doesn't return anything so we do nothing
-            pass
+    for path in paths:
+        augment_image(path)
+
     print(f"Time taken: {perf_counter() - t:.2f}s\n")
 
 

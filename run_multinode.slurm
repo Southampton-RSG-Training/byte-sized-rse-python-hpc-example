@@ -5,8 +5,8 @@
 #SBATCH --reservation=root_1    # Reserved nodes for this class (don't add this normally)
 #SBATCH --time=00:05:00
 #SBATCH --nodes=2
-#SBATCH --ntasks=2
-#SBATCH --cpus-per-task=32
+#SBATCH --ntasks=64
+#SBATCH --cpus-per-task=1
 
 # Optional: print useful job info
 echo "Running on host: $(hostname)"
