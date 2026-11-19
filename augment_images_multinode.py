@@ -7,8 +7,10 @@
 # ]
 # ///
 
-import sys
+from concurrent.futures import ProcessPoolExecutor
+import os
 from pathlib import Path
+from time import perf_counter
 
 import click
 from PIL import Image
@@ -45,9 +47,6 @@ def augment_image(
     help="The number of workers to use.",
 )
 def main(input_dir, n_workers=None):
-    from concurrent.futures import ProcessPoolExecutor
-    import os
-    from time import perf_counter
 
     print("Available cores:", os.process_cpu_count())
 
@@ -65,7 +64,7 @@ def main(input_dir, n_workers=None):
             # if the function returns anything we could do something with the
             # result; but augment_image doesn't return anything so we do nothing
             pass
-    sys.stderr.write(f"Time taken: {perf_counter() - t:.2f}s\n")
+    print(f"Time taken: {perf_counter() - t:.2f}s\n")
 
 
 if __name__ == "__main__":
