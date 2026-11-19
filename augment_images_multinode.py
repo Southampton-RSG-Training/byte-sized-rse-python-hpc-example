@@ -51,6 +51,7 @@ def main(input_dir, n_workers=None):
 
     print("Available cores:", os.process_cpu_count())
 
+    t = perf_counter()
     DEFAULT_OUTPUT.mkdir(exist_ok=True)
     all_paths = sorted(Path(input_dir).glob("*.jpg"))
 
